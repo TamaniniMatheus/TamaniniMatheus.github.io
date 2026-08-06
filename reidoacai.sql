@@ -29,14 +29,14 @@ TIPO_PROD VARCHAR(30),
 VALOR_PROD DECIMAL(5,2),
 ESTOQUE INTEGER,
 IMAGEM VARCHAR(255)
-
 );
 
 CREATE TABLE ADICIONAL(
 ID_ADC INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 NOME_ADC VARCHAR(30),
 VALOR_ADC DECIMAL(5,2),
-ESTOQUE INTEGER
+ESTOQUE INTEGER,
+IMAGEM VARCHAR(255)
 );
 
 CREATE TABLE ITEM_PEDIDO(
@@ -62,4 +62,20 @@ INSERT INTO ENDERECO(RUA,BAIRRO,CIDADE,ESTADO,CEP,NUMERO,COMPLEMENTO)
 VALUES('Rua 13 de Maio','Centro','Paulo de Faria','SP','15490015','498','Casa de esquina');
 
 INSERT INTO produto(NOME_PROD,TIPO_PROD,VALOR_PROD,ESTOQUE,IMAGEM)
-VALUES('Açaí 400ml','Copo',25.00,20,'imagem/400ml.webp');
+VALUES('Açaí 400ml','Copo',25.00,20,'imagem/400ml.jpeg');
+VALUES('Açaí 500ml', 'Copo', 27.00,'imagem/500ml.jpeg');
+VALUES('Açaí 700ml', 'Copo', 35.00,'imagem/700ml.png');
+VALUES('Açaí 1litro', 'Pote', 50.00,'imagem/1litro.jpeg');
+
+INSERT INTO ADICIONAL(NOME_ADC,VALOR_ADC,ESTOQUE,IMAGEM)
+VALUES('Creme de avelã',0.0,50,'imagem/avela');
+VALUES ('Creme de Ovo Maltine',0,50,'imagem/ovomaltine');
+VALUES('Creme de Kinder Bueno',0,50,'imagem/kinderbueno');
+VALUES('Creme de Rafaello',0,50,'imagem/rafaello');
+VALUES('Creme de Oreo',0,50,'imagem/oreo');
+VALUES('Creme de morango',0,50,'imagem/crememorango');
+VALUES('Creme de ninho(chantilly)',0,50,'imagem/cremeninho');
+VALUES('Recheio de ninho(tipo chocolate branco',0,50,'imagem/recheioninho');
+VALUES('Gotas de chocolate',0,50,'imagem/gotaschocolate');
+VALUES('Disquete',0,50,'imagem/disquete');
+VALUES('Kit Kat',0,50,'imagem/kitkat');
