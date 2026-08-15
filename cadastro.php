@@ -16,7 +16,7 @@
             <p class="text-gray-500 mt-2">Crie sua conta</p>
         </div>
 
-        <form action="processa_cadastro.php" method="POST" class="space-y-5">
+        <form action="processa/processa_cadastro.php" method="POST">
 
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">

@@ -98,3 +98,6 @@ VALUES
 ('Calda de Maracujá',0,50,'imagem/caldamaracuja.png'),
 ('Calda de Morango',0,50,'imagem/caldamorango.png'),
 ('Nutella Original',0,50,'imagem/nutella.png');
+
+ALTER TABLE CLIENTE
+MODIFY SENHA VARCHAR(255);
