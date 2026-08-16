@@ -66,7 +66,7 @@ if ($cliente["ID_CLI"] == 1) {
     $stmt->close();
     $conexao->close();
 
-    header("Location: admin.php");
+  header("Location: ../admin/index.php");
     exit;
 
 }
