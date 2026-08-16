@@ -99,3 +99,4 @@ VALUES
 ('Calda de Morango',0,50,'imagem/caldamorango.png'),
 ('Nutella Original',0,50,'imagem/nutella.png');
 
+ALTER TABLE ADICIONAL ADD COLUMN TIPO_ADC VARCHAR(30) AFTER NOME_ADC;

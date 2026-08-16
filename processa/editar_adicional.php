@@ -10,34 +10,33 @@ if (!isset($_SESSION["ID_CLI"]) || $_SESSION["ID_CLI"] != 1) {
 require_once "../config/conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../admin/produtos.php");
+    header("Location: ../admin/adicionais.php");
     exit;
 }
 
-$id = $_POST["id_prod"] ?? "";
+$id = $_POST["id_adc"] ?? "";
 
 if (!is_numeric($id)) {
-    header("Location: ../admin/produtos.php");
+    header("Location: ../admin/adicionais.php");
     exit;
 }
 
-$nome = trim($_POST["nome_prod"] ?? "");
-$tipo = trim($_POST["tipo_prod"] ?? "");
-$valor = $_POST["valor_prod"] ?? "";
+$nome = trim($_POST["nome_adc"] ?? "");
+$tipo = trim($_POST["tipo_adc"] ?? "");
+$valor = $_POST["valor_adc"] ?? "";
 $estoque = $_POST["estoque"] ?? "";
 
 if ($nome === "" || $tipo === "" || $valor === "" || $estoque === "") {
-    header("Location: ../admin/editar_produto.php?id=$id&erro=preenchimento");
+    header("Location: ../admin/editar_adicional.php?id=$id&erro=preenchimento");
     exit;
 }
 
 if (!is_numeric($valor) || $valor < 0 || !is_numeric($estoque) || $estoque < 0) {
-    header("Location: ../admin/editar_produto.php?id=$id&erro=valor");
+    header("Location: ../admin/editar_adicional.php?id=$id&erro=valor");
     exit;
 }
 
-// Busca a imagem atual SEM usar get_result()
-$stmt = $conexao->prepare("SELECT IMAGEM FROM PRODUTO WHERE ID_PROD = ?");
+$stmt = $conexao->prepare("SELECT IMAGEM FROM ADICIONAL WHERE ID_ADC = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $stmt->bind_result($imagem_atual);
@@ -45,7 +44,7 @@ $encontrado = $stmt->fetch();
 $stmt->close();
 
 if (!$encontrado) {
-    header("Location: ../admin/produtos.php");
+    header("Location: ../admin/adicionais.php");
     exit;
 }
 
@@ -54,7 +53,7 @@ $nome_imagem = $imagem_atual;
 if (isset($_FILES["imagem"]) && $_FILES["imagem"]["error"] !== UPLOAD_ERR_NO_FILE) {
 
     if ($_FILES["imagem"]["error"] !== UPLOAD_ERR_OK) {
-        header("Location: ../admin/editar_produto.php?id=$id&erro=imagem");
+        header("Location: ../admin/editar_adicional.php?id=$id&erro=imagem");
         exit;
     }
 
@@ -62,23 +61,23 @@ if (isset($_FILES["imagem"]) && $_FILES["imagem"]["error"] !== UPLOAD_ERR_NO_FIL
     $extensao = strtolower(pathinfo($_FILES["imagem"]["name"], PATHINFO_EXTENSION));
 
     if (!in_array($extensao, $extensoes_permitidas)) {
-        header("Location: ../admin/editar_produto.php?id=$id&erro=formato");
+        header("Location: ../admin/editar_adicional.php?id=$id&erro=formato");
         exit;
     }
 
     if (getimagesize($_FILES["imagem"]["tmp_name"]) === false) {
-        header("Location: ../admin/editar_produto.php?id=$id&erro=imagem");
+        header("Location: ../admin/editar_adicional.php?id=$id&erro=imagem");
         exit;
     }
 
     $pasta_imagem = "../imagem/";
     if (!is_dir($pasta_imagem)) mkdir($pasta_imagem, 0755, true);
 
-    $nome_arquivo = uniqid("produto_", true) . "." . $extensao;
+    $nome_arquivo = uniqid("adicional_", true) . "." . $extensao;
     $caminho_imagem = $pasta_imagem . $nome_arquivo;
 
     if (!move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminho_imagem)) {
-        header("Location: ../admin/editar_produto.php?id=$id&erro=upload");
+        header("Location: ../admin/editar_adicional.php?id=$id&erro=upload");
         exit;
     }
 
@@ -89,11 +88,11 @@ if (isset($_FILES["imagem"]) && $_FILES["imagem"]["error"] !== UPLOAD_ERR_NO_FIL
     $nome_imagem = "imagem/" . $nome_arquivo;
 }
 
-$sql = "UPDATE PRODUTO SET NOME_PROD = ?, TIPO_PROD = ?, VALOR_PROD = ?, ESTOQUE = ?, IMAGEM = ? WHERE ID_PROD = ?";
+$sql = "UPDATE ADICIONAL SET NOME_ADC = ?, TIPO_ADC = ?, VALOR_ADC = ?, ESTOQUE = ?, IMAGEM = ? WHERE ID_ADC = ?";
 $stmt = $conexao->prepare($sql);
 
 if (!$stmt) {
-    header("Location: ../admin/editar_produto.php?id=$id&erro=banco");
+    header("Location: ../admin/editar_adicional.php?id=$id&erro=banco");
     exit;
 }
 
@@ -102,11 +101,11 @@ $stmt->bind_param("ssdisi", $nome, $tipo, $valor, $estoque, $nome_imagem, $id);
 if ($stmt->execute()) {
     $stmt->close();
     $conexao->close();
-    header("Location: ../admin/produtos.php?edicao=sucesso");
+    header("Location: ../admin/adicionais.php?edicao=sucesso");
     exit;
 }
 
 $stmt->close();
 $conexao->close();
-header("Location: ../admin/editar_produto.php?id=$id&erro=banco");
+header("Location: ../admin/editar_adicional.php?id=$id&erro=banco");
 exit;

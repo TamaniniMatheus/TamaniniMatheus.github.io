@@ -302,7 +302,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
                 <!-- Clientes -->
 
                 <a
-                    href="#"
+                    href="adicionais.php"
                     class="border border-gray-200 rounded-xl p-5 hover:border-purple-500 hover:shadow-sm transition"
                 >
 

@@ -21,11 +21,12 @@ if (!is_numeric($id)) {
     exit;
 }
 
-// Busca a imagem do produto antes de apagar, para remover o arquivo também
+// Busca a imagem do produto ANTES de apagar, SEM usar get_result()
 $stmt = $conexao->prepare("SELECT IMAGEM FROM PRODUTO WHERE ID_PROD = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$produto = $stmt->get_result()->fetch_assoc();
+$stmt->bind_result($imagem_produto);
+$stmt->fetch();
 $stmt->close();
 
 $stmt = $conexao->prepare("DELETE FROM PRODUTO WHERE ID_PROD = ?");
@@ -50,8 +51,8 @@ if (!$stmt->execute()) {
 
 $stmt->close();
 
-if ($produto && !empty($produto["IMAGEM"]) && file_exists("../" . $produto["IMAGEM"])) {
-    unlink("../" . $produto["IMAGEM"]);
+if (!empty($imagem_produto) && file_exists("../" . $imagem_produto)) {
+    unlink("../" . $imagem_produto);
 }
 
 $conexao->close();
