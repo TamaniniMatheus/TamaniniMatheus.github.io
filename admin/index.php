@@ -66,7 +66,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
 
 
             <a
-                href="#"
+                href="adicionais.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition mb-2"
             >
                 <span>🥣</span>
@@ -75,7 +75,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
 
 
             <a
-                href="#"
+                href="cliente.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition mb-2"
             >
                 <span>👥</span>
@@ -84,7 +84,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
 
 
             <a
-                href="#"
+                href="relatorio.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition mb-2"
             >
                 <span>📊</span>
