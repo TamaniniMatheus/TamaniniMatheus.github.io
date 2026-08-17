@@ -258,7 +258,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
                 <!-- Produtos -->
 
                 <a
-                    href="#"
+                    href="produtos.php"
                     class="border border-gray-200 rounded-xl p-5 hover:border-purple-500 hover:shadow-sm transition"
                 >
 
@@ -280,7 +280,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
                 <!-- Adicionais -->
 
                 <a
-                    href="#"
+                    href="adicionais.php"
                     class="border border-gray-200 rounded-xl p-5 hover:border-purple-500 hover:shadow-sm transition"
                 >
 
@@ -302,7 +302,7 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
                 <!-- Clientes -->
 
                 <a
-                    href="adicionais.php"
+                    href="clientes.php"
                     class="border border-gray-200 rounded-xl p-5 hover:border-purple-500 hover:shadow-sm transition"
                 >
 
