@@ -77,17 +77,17 @@ $mensagem_erro = $mensagens_erro[$erro] ?? null;
                 <span>Produtos</span>
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
+            <a href="adicionais.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
                 <span class="text-lg">🥣</span>
                 <span>Adicionais</span>
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
+            <a href="clientes.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
                 <span class="text-lg">👥</span>
                 <span>Clientes</span>
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
+            <a href="relatorios.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
                 <span class="text-lg">📊</span>
                 <span>Relatórios</span>
             </a>
