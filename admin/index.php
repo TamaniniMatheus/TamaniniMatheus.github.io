@@ -73,6 +73,11 @@ $usuario = $_SESSION["USUARIO"] ?? "Administrador";
                 <span>Adicionais</span>
             </a>
 
+            <a href="pedidos.php"
+    class="flex items-center gap-3 px-4 py-3 rounded-lg bg-purple-700 mb-2">
+    <span class="text-lg">🧾</span>
+    <span>Pedidos</span>
+</a>
 
             <a
                 href="cliente.php"

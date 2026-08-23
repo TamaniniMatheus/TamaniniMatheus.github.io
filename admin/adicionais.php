@@ -56,31 +56,56 @@ $mensagem_erro = $mensagens_erro[$erro] ?? null;
         </div>
 
         <nav class="px-4 py-5">
-            <a href="index.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
-                <span class="text-lg">🏠</span>
-                <span>Início</span>
-            </a>
 
-            <a href="produtos.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
-                <span class="text-lg">📦</span>
-                <span>Produtos</span>
-            </a>
+    <a
+        href="index.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2"
+    >
+        <span class="text-lg">🏠</span>
+        <span>Início</span>
+    </a>
 
-            <a href="adicionais.php" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-purple-700 mb-2">
-                <span class="text-lg">🥣</span>
-                <span>Adicionais</span>
-            </a>
+    <a
+        href="produtos.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2"
+    >
+        <span class="text-lg">📦</span>
+        <span>Produtos</span>
+    </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
-                <span class="text-lg">👥</span>
-                <span>Clientes</span>
-            </a>
+    <a
+        href="adicionais.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg bg-purple-700 mb-2"
+    >
+        <span class="text-lg">🥣</span>
+        <span>Adicionais</span>
+    </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2">
-                <span class="text-lg">📊</span>
-                <span>Relatórios</span>
-            </a>
-        </nav>
+    <a
+        href="pedidos.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2"
+    >
+        <span class="text-lg">🧾</span>
+        <span>Pedidos</span>
+    </a>
+
+    <a
+        href="clientes.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2"
+    >
+        <span class="text-lg">👥</span>
+        <span>Clientes</span>
+    </a>
+
+    <a
+        href="relatorio.php"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 mb-2"
+    >
+        <span class="text-lg">📊</span>
+        <span>Relatórios</span>
+    </a>
+
+</nav>
 
         <div class="absolute bottom-0 left-0 w-full p-4 border-t border-purple-700">
             <a href="../index.php" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200">
