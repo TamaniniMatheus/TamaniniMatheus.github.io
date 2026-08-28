@@ -9,12 +9,6 @@ if (!isset($_SESSION["ID_CLI"]) || $_SESSION["ID_CLI"] != 1) {
 
 require_once "../config/conexao.php";
 
-
-// ======================================================
-// INDICADORES PRINCIPAIS
-// ======================================================
-
-// Total de clientes
 $resultado = $conexao->query("
     SELECT COUNT(*) AS total
     FROM CLIENTE
@@ -101,10 +95,6 @@ if ($resultado) {
     }
 }
 
-
-// ======================================================
-// PRODUTOS MAIS VENDIDOS
-// ======================================================
 
 $produtos_vendidos = [];
 
@@ -376,11 +366,6 @@ $dados_status = [
 
     </aside>
 
-
-
-    <!-- ==================================================
-         CONTEÚDO
-    =================================================== -->
 
     <main class="ml-64 p-8">
 
@@ -954,7 +939,7 @@ $dados_status = [
 
     <!-- JavaScript do dashboard -->
 
-    <script src="../js/relatorios.js"></script>
+    <script src="../js/relatorio.js"></script>
 
 
 </body>
