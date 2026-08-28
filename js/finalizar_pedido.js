@@ -1,23 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    // ==========================================================
+    // CARRINHO
+    // ==========================================================
 
-    const resumoProdutos = document.getElementById("resumoProdutos");
-    const subtotalProdutos = document.getElementById("subtotalProdutos");
-    const subtotalAdicionais = document.getElementById("subtotalAdicionais");
-    const totalPedido = document.getElementById("totalPedido");
-    const formFinalizarPedido = document.getElementById("formFinalizarPedido");
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
 
-    let valorProdutos = 0;
-    let valorAdicionais = 0;
 
-    resumoProdutos.innerHTML = "";
+    // ==========================================================
+    // ELEMENTOS
+    // ==========================================================
 
-    /*
-    |--------------------------------------------------------------------------
-    | VERIFICAR CARRINHO
-    |--------------------------------------------------------------------------
-    */
+    const resumoProdutos =
+        document.getElementById("resumoProdutos");
+
+    const subtotalProdutos =
+        document.getElementById("subtotalProdutos");
+
+    const subtotalAdicionais =
+        document.getElementById("subtotalAdicionais");
+
+    const totalPedido =
+        document.getElementById("totalPedido");
+
+    const formFinalizarPedido =
+        document.getElementById("formFinalizarPedido");
+
+
+    // ==========================================================
+    // VERIFICAR CARRINHO
+    // ==========================================================
 
     if (carrinho.length === 0) {
 
@@ -27,42 +40,50 @@ document.addEventListener("DOMContentLoaded", function () {
             </p>
         `;
 
-        if (formFinalizarPedido) {
-            formFinalizarPedido.style.display = "none";
-        }
-
         return;
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | MOSTRAR PRODUTOS
-    |--------------------------------------------------------------------------
-    */
+    // ==========================================================
+    // TOTAIS
+    // ==========================================================
+
+    let valorProdutos = 0;
+    let valorAdicionais = 0;
+
+
+    // ==========================================================
+    // EXIBIR PRODUTOS
+    // ==========================================================
+
+    resumoProdutos.innerHTML = "";
+
 
     carrinho.forEach(function (item) {
 
-        const quantidade = Number(item.quantidade) || 1;
-        const valorProduto = Number(item.valor) || 0;
+        const quantidade =
+            Number(item.quantidade) || 1;
 
-        const subtotalProduto = valorProduto * quantidade;
+        const valorProduto =
+            Number(item.preco) || 0;
+
+
+        const subtotalProduto =
+            valorProduto * quantidade;
+
 
         valorProdutos += subtotalProduto;
 
 
+        // ======================================================
+        // ADICIONAIS
+        // ======================================================
+
         let adicionaisHTML = "";
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | ADICIONAIS
-        |--------------------------------------------------------------------------
-        */
-
         if (
             item.adicionais &&
-            Array.isArray(item.adicionais) &&
             item.adicionais.length > 0
         ) {
 
@@ -72,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${item.adicionais.map(function (adicional) {
 
                         const valorAdicional =
-                            Number(adicional.valor) || 0;
+                            Number(adicional.preco) || 0;
+
 
                         valorAdicionais +=
                             valorAdicional * quantidade;
@@ -84,10 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 ${
                                     valorAdicional > 0
-                                    ? ` — R$ ${valorAdicional
-                                        .toFixed(2)
-                                        .replace(".", ",")}`
-                                    : " (grátis)"
+                                        ? ` — R$ ${valorAdicional
+                                            .toFixed(2)
+                                            .replace(".", ",")}`
+                                        : " (grátis)"
                                 }
 
                             </p>
@@ -100,11 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | PRODUTO NO RESUMO
-        |--------------------------------------------------------------------------
-        */
+        // ======================================================
+        // CARD DO PRODUTO
+        // ======================================================
 
         resumoProdutos.innerHTML += `
 
@@ -142,13 +162,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | TOTAL
-    |--------------------------------------------------------------------------
-    */
+    // ==========================================================
+    // TOTAL
+    // ==========================================================
 
-    const total = valorProdutos + valorAdicionais;
+    const total =
+        valorProdutos +
+        valorAdicionais;
 
 
     subtotalProdutos.textContent =
@@ -172,55 +192,91 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace(".", ",");
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | ENVIAR CARRINHO PARA O PHP
-    |--------------------------------------------------------------------------
-    */
+    // ==========================================================
+    // ENVIAR PEDIDO
+    // ==========================================================
 
     if (formFinalizarPedido) {
 
         formFinalizarPedido.addEventListener(
             "submit",
-            function () {
+            function (event) {
 
-                /*
-                | O localStorage não é enviado automaticamente
-                | pelo formulário.
-                |
-                | Por isso criamos um input hidden contendo
-                | o carrinho em formato JSON.
-                */
-
-                let inputCarrinho =
-                    document.getElementById("inputCarrinho");
+                // Impede o envio original
+                event.preventDefault();
 
 
-                /*
-                | Se ainda não existir, cria o input.
-                */
+                // ==================================================
+                // VERIFICAR CARRINHO
+                // ==================================================
 
-                if (!inputCarrinho) {
+                if (carrinho.length === 0) {
 
-                    inputCarrinho =
-                        document.createElement("input");
-
-                    inputCarrinho.type = "hidden";
-                    inputCarrinho.name = "carrinho";
-                    inputCarrinho.id = "inputCarrinho";
-
-                    formFinalizarPedido.appendChild(
-                        inputCarrinho
+                    alert(
+                        "Seu carrinho está vazio."
                     );
+
+                    return;
                 }
 
 
-                /*
-                | Coloca o carrinho dentro do input.
-                */
+                // ==================================================
+                // VERIFICAR PAGAMENTO
+                // ==================================================
 
-                inputCarrinho.value =
+                const pagamentoSelecionado =
+                    document.querySelector(
+                        'input[name="metodo_pag"]:checked'
+                    );
+
+
+                if (!pagamentoSelecionado) {
+
+                    alert(
+                        "Selecione uma forma de pagamento."
+                    );
+
+                    return;
+                }
+
+
+                // ==================================================
+                // ADICIONAR CARRINHO AO FORMULÁRIO
+                // ==================================================
+
+                let campoCarrinho =
+                    document.getElementById(
+                        "campoCarrinho"
+                    );
+
+
+                if (!campoCarrinho) {
+
+                    campoCarrinho =
+                        document.createElement("input");
+
+                    campoCarrinho.type = "hidden";
+
+                    campoCarrinho.name = "carrinho";
+
+                    campoCarrinho.id = "campoCarrinho";
+
+                    formFinalizarPedido.appendChild(
+                        campoCarrinho
+                    );
+
+                }
+
+
+                campoCarrinho.value =
                     JSON.stringify(carrinho);
+
+
+                // ==================================================
+                // ENVIAR PARA O PHP
+                // ==================================================
+
+                formFinalizarPedido.submit();
 
             }
         );

@@ -716,7 +716,6 @@ if (finalizarPedido) {
             const carrinho =
                 obterCarrinho();
 
-
             if (carrinho.length === 0) {
 
                 alert(
@@ -727,7 +726,6 @@ if (finalizarPedido) {
 
             }
 
-
             window.location.href =
                 "confirmar_pedido.php";
 
@@ -735,6 +733,8 @@ if (finalizarPedido) {
     );
 
 }
+
+
 
 
 // ==========================================================

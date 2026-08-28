@@ -164,7 +164,9 @@ $stmt_cliente->close();
         <section class="lg:col-span-2 space-y-6">
 
 
-            <!-- ENDEREÇO -->
+            <!-- =================================================
+                 ENDEREÇO
+            ================================================== -->
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
 
@@ -197,7 +199,10 @@ $stmt_cliente->close();
                         <p class="text-gray-600">
 
                             <?php echo htmlspecialchars($cliente["BAIRRO"]); ?> -
-                            <?php echo htmlspecialchars($cliente["CIDADE"]); ?>/<?php echo htmlspecialchars($cliente["ESTADO"]); ?>
+
+                            <?php echo htmlspecialchars($cliente["CIDADE"]); ?>/
+
+                            <?php echo htmlspecialchars($cliente["ESTADO"]); ?>
 
                         </p>
 
@@ -205,6 +210,7 @@ $stmt_cliente->close();
                         <p class="text-gray-600">
 
                             CEP:
+
                             <?php echo htmlspecialchars($cliente["CEP"]); ?>
 
                         </p>
@@ -215,6 +221,7 @@ $stmt_cliente->close();
                             <p class="text-gray-600">
 
                                 Complemento:
+
                                 <?php echo htmlspecialchars($cliente["COMPLEMENTO"]); ?>
 
                             </p>
@@ -222,6 +229,7 @@ $stmt_cliente->close();
                         <?php endif; ?>
 
                     </div>
+
 
                 <?php else: ?>
 
@@ -240,6 +248,15 @@ $stmt_cliente->close();
 
                         </p>
 
+
+                        <a
+                            href="cadastro_endereco.php"
+                            class="inline-block mt-4 bg-yellow-500 text-white px-5 py-2 rounded-lg font-semibold hover:bg-yellow-600">
+
+                            Cadastrar endereço
+
+                        </a>
+
                     </div>
 
                 <?php endif; ?>
@@ -247,7 +264,11 @@ $stmt_cliente->close();
             </div>
 
 
-            <!-- PAGAMENTO -->
+            <!-- =================================================
+                 PAGAMENTO
+            ================================================== -->
+
+            <?php if ($cliente && !empty($cliente["RUA"])): ?>
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
 
@@ -264,10 +285,19 @@ $stmt_cliente->close();
                     method="POST">
 
 
+                    <!-- CARRINHO SERÁ PREENCHIDO PELO JAVASCRIPT -->
+
+                    <input
+                        type="hidden"
+                        name="carrinho"
+                        id="carrinho">
+
+
                     <div class="space-y-3">
 
 
-                        <label class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
+                        <label
+                            class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
 
                             <input
                                 type="radio"
@@ -284,7 +314,8 @@ $stmt_cliente->close();
                         </label>
 
 
-                        <label class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
+                        <label
+                            class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
 
                             <input
                                 type="radio"
@@ -301,7 +332,8 @@ $stmt_cliente->close();
                         </label>
 
 
-                        <label class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
+                        <label
+                            class="flex items-center gap-3 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-50">
 
                             <input
                                 type="radio"
@@ -340,6 +372,8 @@ $stmt_cliente->close();
 
             </div>
 
+            <?php endif; ?>
+
         </section>
 
 
@@ -359,9 +393,9 @@ $stmt_cliente->close();
                 </h2>
 
 
-                <!-- JavaScript vai preencher -->
-
-                <div id="resumoProdutos" class="space-y-4">
+                <div
+                    id="resumoProdutos"
+                    class="space-y-4">
 
                 </div>
 

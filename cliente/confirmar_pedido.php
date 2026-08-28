@@ -8,7 +8,7 @@ session_start();
 |--------------------------------------------------------------------------
 */
 
-if (!isset($_SESSION["ID_CLI"])) {
+if (!isset($_SESSION["ID_CLI"]) || $_SESSION["ID_CLI"] == 1) {
     header("Location: ../loginusuario.php");
     exit;
 }
@@ -419,7 +419,7 @@ $id_cliente = (int) $_SESSION["ID_CLI"];
                             <input
                                 type="radio"
                                 name="metodo_pag"
-                                value="PIX"
+                                value="Pix"
                                 class="w-4 h-4">
 
                             <span>
@@ -649,11 +649,11 @@ function exibirConfirmacao() {
 
 
         const quantidade =
-            Number(item.quantidade);
+            Number(item.quantidade) || 1;
 
 
         const precoProduto =
-            Number(item.preco);
+            Number(item.preco) || 0;
 
 
         const subtotalProduto =
@@ -687,18 +687,21 @@ function exibirConfirmacao() {
                         ${item.adicionais.map(function(adicional) {
 
                             const preco =
-                                Number(adicional.preco);
+                                Number(adicional.preco) || 0;
 
                             valorAdicionais += preco;
 
                             return `
                                 <li>
+
                                     • ${adicional.nome}
+
                                     ${
                                         preco > 0
                                         ? " + R$ " + formatarPreco(preco)
                                         : " (grátis)"
                                     }
+
                                 </li>
                             `;
 
@@ -748,11 +751,13 @@ function exibirConfirmacao() {
 
                     </h3>
 
+
                     <p class="text-sm text-gray-500 mt-1">
 
                         ${quantidade} unidade(s)
 
                     </p>
+
 
                     ${htmlAdicionais}
 
@@ -766,6 +771,7 @@ function exibirConfirmacao() {
                         Subtotal
 
                     </p>
+
 
                     <p class="font-bold text-purple-700">
 
@@ -868,7 +874,7 @@ confirmarPedido.addEventListener(
 
 
         const estado =
-            document.getElementById("estado").value.trim();
+            document.getElementById("estado").value.trim().toUpperCase();
 
 
         const cep =
@@ -884,6 +890,12 @@ confirmarPedido.addEventListener(
                 'input[name="metodo_pag"]:checked'
             );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDAR ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
 
         if (
             rua === "" ||
@@ -903,6 +915,12 @@ confirmarPedido.addEventListener(
         }
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDAR PAGAMENTO
+        |--------------------------------------------------------------------------
+        */
+
         if (!metodoPagamento) {
 
             mostrarErro(
@@ -915,61 +933,147 @@ confirmarPedido.addEventListener(
 
 
         /*
-        ----------------------------------------------------------
-        PREPARAR DADOS PARA A PRÓXIMA ETAPA
-        ----------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | CRIAR FORMULÁRIO
+        |--------------------------------------------------------------------------
+        |
+        | O formulário será enviado diretamente para:
+        |
+        | ../processa/criar_pedido.php
+        |
         */
 
-        const dadosPedido = {
+        const formulario =
+            document.createElement("form");
 
-            cliente: <?php echo $id_cliente; ?>,
 
-            carrinho: carrinho,
+        formulario.method =
+            "POST";
 
-            endereco: {
 
-                rua: rua,
-
-                numero: numero,
-
-                bairro: bairro,
-
-                cidade: cidade,
-
-                estado: estado,
-
-                cep: cep,
-
-                complemento: complemento
-
-            },
-
-            metodo_pagamento:
-                metodoPagamento.value
-
-        };
+        formulario.action =
+            "../processa/criar_pedido.php";
 
 
         /*
-        ----------------------------------------------------------
-        SALVAR TEMPORARIAMENTE
-        ----------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | CARRINHO
+        |--------------------------------------------------------------------------
         */
 
-        localStorage.setItem(
-            "dadosPedido",
-            JSON.stringify(dadosPedido)
+        const campoCarrinho =
+            document.createElement("input");
+
+
+        campoCarrinho.type =
+            "hidden";
+
+
+        campoCarrinho.name =
+            "carrinho";
+
+
+        campoCarrinho.value =
+            JSON.stringify(carrinho);
+
+
+        formulario.appendChild(
+            campoCarrinho
         );
 
 
         /*
-        ----------------------------------------------------------
-        PRÓXIMA ETAPA
-        ----------------------------------------------------------
+        |--------------------------------------------------------------------------
+        | MÉTODO DE PAGAMENTO
+        |--------------------------------------------------------------------------
         */
 
-        window.location.href =
-            "../processa/finalizar_pedido.php";
+        const campoPagamento =
+            document.createElement("input");
+
+
+        campoPagamento.type =
+            "hidden";
+
+
+        campoPagamento.name =
+            "metodo_pag";
+
+
+        campoPagamento.value =
+            metodoPagamento.value;
+
+
+        formulario.appendChild(
+            campoPagamento
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
+
+        const camposEndereco = {
+
+            rua: rua,
+
+            numero: numero,
+
+            bairro: bairro,
+
+            cidade: cidade,
+
+            estado: estado,
+
+            cep: cep,
+
+            complemento: complemento
+
+        };
+
+
+        Object.keys(camposEndereco).forEach(
+            function(nome) {
+
+
+                const campo =
+                    document.createElement("input");
+
+
+                campo.type =
+                    "hidden";
+
+
+                campo.name =
+                    nome;
+
+
+                campo.value =
+                    camposEndereco[nome];
+
+
+                formulario.appendChild(
+                    campo
+                );
+
+            }
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENVIAR
+        |--------------------------------------------------------------------------
+        */
+
+        document.body.appendChild(
+            formulario
+        );
+
+
+        formulario.submit();
 
     }
 );
@@ -977,7 +1081,7 @@ confirmarPedido.addEventListener(
 
 /*
 |--------------------------------------------------------------------------
-| INICIAR
+| INICIALIZAÇÃO
 |--------------------------------------------------------------------------
 */
 
